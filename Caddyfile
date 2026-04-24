@@ -30,9 +30,14 @@
 			{$USERNAME} {$PASSWORD_HASH}
 		}
 
-		# proxy all requests for /* to the set environment variable
+		# proxy all requests for /* to the set environment variable.
+		# h2c transport is required for gRPC backends (e.g. Temporal Frontend),
+		# which need HTTP/2 cleartext to the upstream.
 		reverse_proxy {$PROXY_PASS} {
 			header_up Host {upstream_hostport}
+			transport http {
+				versions h2c 2
+			}
 		}
 	}
 }
