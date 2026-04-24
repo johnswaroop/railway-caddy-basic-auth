@@ -10,6 +10,7 @@
 	# server options
 	servers {
 		trusted_proxies static private_ranges # trust railway's proxy
+		protocols h1 h2c # enable HTTP/2 cleartext listening so gRPC works end-to-end (Railway terminates TLS at the edge)
 	}
 }
 
